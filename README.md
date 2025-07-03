@@ -5,7 +5,7 @@ O featManga é uma aplicação que permite aos usuários encontrar mangás que c
 ## Funcionalidades
 
 - Busca por título ou múltiplas tags (ex.: Action + Romance, sem Harem)
-- Filtros por status (ongoing, completed), demografia (shounen, seinen, etc.) e classificação de conteúdo (safe, erotica)
+- Filtros por status (ongoing, completed), demografia (shounen, seinen, etc.) e classificação de conteúdo (safe, erotica, ...)
 - Ordenação por relevância, rating, seguidores e data de upload
 - Paginação para navegação eficiente
 - Suporte a múltiplos idiomas e versões romanizadas
