@@ -81,34 +81,34 @@ export default function SearchPage() {
               <h1 className="text-3xl font-bold">Busca Avançada</h1>
             </div>
             <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
+                <Button
+                variant={showFilters ? "secondary" : "outline"}
                 size="sm"
                 onClick={() => setShowFilters(!showFilters)}
-                className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
-              >
+                className="text-primary-foreground bg-primary hover:bg-primary/90 border-white"
+                >
                 <Filter className="w-4 h-4 mr-2" />
                 {showFilters ? "Ocultar" : "Mostrar"} Filtros
-              </Button>
-              
-              <Button
-                variant="outline"
+                </Button>
+                
+                <Button
+                variant={isAdultContentEnabled ? "destructive" : "secondary"}
                 size="sm"
                 onClick={isAdultContentEnabled ? disableAdultContent : enableAdultContent}
-                className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
-              >
+                className="text-primary-foreground bg-primary hover:bg-primary/90 border-white"
+                >
                 {isAdultContentEnabled ? (
                   <>
-                    <ShieldOff className="w-4 h-4 mr-2" />
-                    Desativar 18+
+                  <ShieldOff className="w-4 h-4 mr-2" />
+                  Desativar 18+
                   </>
                 ) : (
                   <>
-                    <Shield className="w-4 h-4 mr-2" />
-                    Ativar 18+
+                  <Shield className="w-4 h-4 mr-2" />
+                  Ativar 18+
                   </>
                 )}
-              </Button>
+                </Button>
               
               <div className="flex border border-primary-foreground rounded">
                 <Button
