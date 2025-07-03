@@ -34,7 +34,7 @@ export function MangaCard({ manga, showStats = false, hasSensitiveContent }: Man
       return `/placeholder.svg?height=300&width=200&text=${encodeURIComponent(title.slice(0, 15))}`
     }
 
-    return `https://uploads.mangadex.org/covers/${manga.id}/${coverFileName}`
+    return `https://uploads.mangadex.org/covers/${manga.id}/${coverFileName}.png`
   }
 
   const coverUrl = getCoverUrl()
