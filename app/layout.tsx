@@ -4,8 +4,6 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { ThemeProvider } from "@/lib/theme-context"
-import { AdultContentProvider } from "@/lib/adult-content-context"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -13,6 +11,7 @@ export const metadata: Metadata = {
   title: "featManga - Descubra os Melhores Mangás",
   description:
     "Plataforma de recomendações de mangás com filtros avançados e busca personalizada usando a API do MangaDX",
+    generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -21,15 +20,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
+    <html lang="pt-BR">
       <body className={inter.className}>
-        <ThemeProvider>
-          <AdultContentProvider>
-            <Header />
-            <main>{children}</main>
-            <Footer />
-          </AdultContentProvider>
-        </ThemeProvider>
+        <div className="min-h-screen flex flex-col bg-background">
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   )

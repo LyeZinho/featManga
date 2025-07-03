@@ -1,7 +1,6 @@
 import type { Config } from "tailwindcss"
 
 const config: Config = {
-  darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -26,12 +25,12 @@ const config: Config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#E63946",
-          foreground: "#FFFFFF",
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: "#457B9D",
-          foreground: "#FFFFFF",
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -53,23 +52,16 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Custom manga theme colors with proper dark mode support
-        manga: {
-          dark: "#1E1E1E",
-          light: "#F5F5F5",
-          accent: "#E63946",
-          secondary: "#457B9D",
-          white: "#FFFFFF",
-          // New responsive colors
-          header: {
-            bg: "hsl(var(--manga-header-bg))",
-            text: "hsl(var(--manga-header-text))",
-          },
-          text: {
-            primary: "hsl(var(--manga-text-primary))",
-            secondary: "hsl(var(--manga-text-secondary))",
-            muted: "hsl(var(--manga-text-muted))",
-          },
+        // Tokyo Night specific colors
+        tokyo: {
+          bg: "#1A1B26",
+          card: "#24283B",
+          text: "#C0CAF5",
+          primary: "#7AA2F7",
+          secondary: "#BB9AF7",
+          accent: "#9ECE6A",
+          muted: "#44475A",
+          border: "#44475A",
         },
       },
       borderRadius: {
@@ -86,10 +78,20 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "fade-in": {
+          from: { opacity: "0", transform: "translateY(10px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        glow: {
+          "0%, 100%": { boxShadow: "0 0 20px rgba(122, 162, 247, 0.2)" },
+          "50%": { boxShadow: "0 0 30px rgba(122, 162, 247, 0.4)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in": "fade-in 0.5s ease-out",
+        glow: "glow 2s ease-in-out infinite",
       },
     },
   },

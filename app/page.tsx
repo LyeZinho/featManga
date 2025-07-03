@@ -62,13 +62,13 @@ export default function HomePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-manga-light">
+      <div className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-8">
           <div className="flex items-center justify-center h-64">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-manga-accent mx-auto mb-4"></div>
-              <p className="text-manga-dark">Carregando mangás...</p>
-              {error && <p className="text-manga-accent text-sm mt-2">{error}</p>}
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+              <p className="text-foreground">Carregando mangás...</p>
+              {error && <p className="text-destructive text-sm mt-2">{error}</p>}
             </div>
           </div>
         </div>
@@ -77,19 +77,20 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-manga-light">
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="manga-gradient text-white py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold mb-6">
-            feat<span className="text-manga-secondary">Manga</span>
+      <section className="manga-gradient text-white py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-background/20 to-transparent"></div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h1 className="text-5xl font-bold mb-6 text-white animate-fade-in">
+            feat<span className="text-accent">Manga</span>
           </h1>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
+          <p className="text-xl mb-8 max-w-2xl mx-auto text-white/90">
             Descubra os melhores mangás com recomendações personalizadas baseadas em seus gostos e interesses
           </p>
           <div className="flex gap-4 justify-center">
             <Link href="/search">
-              <Button size="lg" className="bg-manga-secondary hover:bg-manga-secondary/90">
+              <Button size="lg" className="bg-primary hover:bg-primary/80 text-primary-foreground tokyo-glow">
                 <Search className="w-5 h-5 mr-2" />
                 Buscar Mangás
               </Button>
@@ -97,7 +98,7 @@ export default function HomePage() {
             <Button
               size="lg"
               variant="outline"
-              className="border-white text-white hover:bg-white hover:text-manga-dark bg-transparent"
+              className="border-white text-white hover:bg-white hover:text-background bg-transparent"
               asChild
             >
               <Link href="/categories">
@@ -112,7 +113,7 @@ export default function HomePage() {
       <div className="container mx-auto px-4 py-12">
         {/* Error Message */}
         {error && (
-          <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-6">
+          <div className="bg-destructive/10 border border-destructive/20 text-destructive px-4 py-3 rounded mb-6">
             <p className="text-sm">
               <strong>Aviso:</strong> {error} A funcionalidade completa será restaurada quando a conexão com a API for
               estabelecida.
@@ -122,27 +123,27 @@ export default function HomePage() {
 
         {/* Stats Section */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <Card className="text-center">
+          <Card className="text-center bg-card border-border tokyo-glow">
             <CardContent className="pt-6">
-              <TrendingUp className="w-12 h-12 text-manga-primary mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-manga-dark dark:text-white mb-2">10,000+</h3>
-              <p className="text-manga-dark/70 dark:text-manga-light/80">Mangás Disponíveis</p>
+              <TrendingUp className="w-12 h-12 text-primary mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-card-foreground mb-2">10,000+</h3>
+              <p className="text-muted-foreground">Mangás Disponíveis</p>
             </CardContent>
-            </Card>
-            <Card className="text-center">
+          </Card>
+          <Card className="text-center bg-card border-border tokyo-glow">
             <CardContent className="pt-6">
-              <Star className="w-12 h-12 text-manga-primary mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-manga-dark dark:text-white mb-2">4.8/5</h3>
-              <p className="text-manga-dark/70 dark:text-manga-light/80">Avaliação Média</p>
+              <Star className="w-12 h-12 text-accent mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-card-foreground mb-2">4.8/5</h3>
+              <p className="text-muted-foreground">Avaliação Média</p>
             </CardContent>
-            </Card>
-            <Card className="text-center">
+          </Card>
+          <Card className="text-center bg-card border-border tokyo-glow">
             <CardContent className="pt-6">
-              <Clock className="w-12 h-12 text-manga-primary mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-manga-dark dark:text-white mb-2">Diário</h3>
-              <p className="text-manga-dark/70 dark:text-manga-light/80">Atualizações</p>
+              <Clock className="w-12 h-12 text-secondary mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-card-foreground mb-2">Diário</h3>
+              <p className="text-muted-foreground">Atualizações</p>
             </CardContent>
-            </Card>
+          </Card>
         </section>
 
         {/* Popular Manga */}
@@ -150,10 +151,10 @@ export default function HomePage() {
           <section className="mb-12">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <TrendingUp className="w-6 h-6 text-manga-accent" />
-                <h2 className="text-3xl font-bold text-manga-dark">Mais Populares</h2>
+                <TrendingUp className="w-6 h-6 text-primary" />
+                <h2 className="text-3xl font-bold text-foreground">Mais Populares</h2>
               </div>
-              <Badge className="bg-manga-accent text-white">Mais Seguidos</Badge>
+              <Badge className="bg-primary text-primary-foreground hover:bg-primary/80">Mais Seguidos</Badge>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
               {popularManga.map((manga) => (
@@ -168,10 +169,10 @@ export default function HomePage() {
           <section className="mb-12">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <Clock className="w-6 h-6 text-manga-secondary" />
-                <h2 className="text-3xl font-bold text-manga-dark">Atualizados Recentemente</h2>
+                <Clock className="w-6 h-6 text-accent" />
+                <h2 className="text-3xl font-bold text-foreground">Atualizados Recentemente</h2>
               </div>
-              <Badge className="bg-manga-secondary text-white">Novos Capítulos</Badge>
+              <Badge className="bg-accent text-accent-foreground hover:bg-accent/80">Novos Capítulos</Badge>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
               {recentManga.map((manga) => (
@@ -186,10 +187,10 @@ export default function HomePage() {
           <section className="mb-12">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <Star className="w-6 h-6 text-manga-accent" />
-                <h2 className="text-3xl font-bold text-manga-dark">Melhores Avaliados</h2>
+                <Star className="w-6 h-6 text-secondary" />
+                <h2 className="text-3xl font-bold text-foreground">Melhores Avaliados</h2>
               </div>
-              <Badge className="bg-manga-accent text-white">Top Rating</Badge>
+              <Badge className="bg-secondary text-secondary-foreground hover:bg-secondary/80">Top Rating</Badge>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
               {topRatedManga.map((manga) => (
@@ -201,20 +202,17 @@ export default function HomePage() {
 
         {/* CTA Section */}
         <section className="text-center py-12">
-            <Card className="max-w-2xl mx-auto bg-manga-primary dark:bg-manga-dark text-white shadow-lg">
+          <Card className="max-w-2xl mx-auto bg-card border-border tokyo-glow">
             <CardContent className="pt-8">
-              <h3 className="text-2xl font-bold mb-4">Encontre Seu Próximo Mangá Favorito</h3>
-              <p className="mb-6 opacity-90">
-              Use nossos filtros avançados para descobrir mangás que combinam perfeitamente com seus gostos
+              <h3 className="text-2xl font-bold text-card-foreground mb-4">Encontre Seu Próximo Mangá Favorito</h3>
+              <p className="text-muted-foreground mb-6">
+                Use nossos filtros avançados para descobrir mangás que combinam perfeitamente com seus gostos
               </p>
               <Link href="/search">
-              <Button
-                size="lg"
-                className="bg-white text-manga-primary dark:bg-manga-accent dark:text-white hover:bg-manga-accent hover:text-white dark:hover:bg-manga-primary dark:hover:text-white"
-              >
-                <Search className="w-5 h-5 mr-2" />
-                Começar Busca Personalizada
-              </Button>
+                <Button size="lg" className="bg-primary hover:bg-primary/80 text-primary-foreground tokyo-glow">
+                  <Search className="w-5 h-5 mr-2" />
+                  Começar Busca Personalizada
+                </Button>
               </Link>
             </CardContent>
           </Card>

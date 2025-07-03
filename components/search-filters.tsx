@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Search, Filter, X } from "lucide-react"
+import { Search, Filter, X, AlertTriangle } from "lucide-react"
 import { MangaDxAPI, type MangaTag } from "@/lib/mangadx-api"
 
 interface SearchFiltersProps {
@@ -46,7 +46,7 @@ const CONTENT_RATING_OPTIONS = [
   { value: "safe", label: "Seguro" },
   { value: "suggestive", label: "Sugestivo" },
   { value: "erotica", label: "Erótico" },
-  { value: "pornographic", label: "Pornográfico" },
+  { value: "pornographic", label: "Pornográfico", sensitive: true },
 ]
 
 const SORT_OPTIONS = [
@@ -363,35 +363,34 @@ export function SearchFilters({ onSearch, isLoading }: SearchFiltersProps) {
           <Label>Classificação de Conteúdo</Label>
           <div className="grid grid-cols-1 gap-2">
             {CONTENT_RATING_OPTIONS.map((option) => (
-              <div key={option.value} className="flex items-center space-x-2">
-                <Checkbox
-                  id={`rating-${option.value}`}
-                  checked={filters.contentRating.includes(option.value)}
-                  onCheckedChange={(checked) => {
-                    if (checked) {
-                      setFilters((prev) => ({ ...prev, contentRating: [...prev.contentRating, option.value] }))
-                    } else {
-                      setFilters((prev) => ({
-                        ...prev,
-                        contentRating: prev.contentRating.filter((r) => r !== option.value),
-                      }))
-                    }
-                  }}
-                />
-                <Label htmlFor={`rating-${option.value}`} className="text-sm">
-                  {option.label}
-                </Label>
+              <div key={option.value} className="space-y-1">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id={`rating-${option.value}`}
+                    checked={filters.contentRating.includes(option.value)}
+                    onCheckedChange={(checked) => {
+                      if (checked) {
+                        setFilters((prev) => ({ ...prev, contentRating: [...prev.contentRating, option.value] }))
+                      } else {
+                        setFilters((prev) => ({
+                          ...prev,
+                          contentRating: prev.contentRating.filter((r) => r !== option.value),
+                        }))
+                      }
+                    }}
+                  />
+                  <Label htmlFor={`rating-${option.value}`} className="text-sm">
+                    {option.label}
+                  </Label>
+                </div>
+                {option.sensitive && filters.contentRating.includes(option.value) && (
+                  <div className="flex items-center gap-2 text-xs text-orange-600 dark:text-orange-400 ml-6">
+                    <AlertTriangle className="w-3 h-3" />
+                    <span>Conteúdo sensível - As capas serão exibidas com blur</span>
+                  </div>
+                )}
               </div>
             ))}
-            {/* se o label selecionado for "erotica" ou "pornographic", exibir aviso
-            o aviso deve ser um texto vermelho abaixo do checkbox e deve ser um tanto
-            para erotica quanto para pornographic ou seja sem texto duplicado/adcional
-            */}
-            {(filters.contentRating.includes("erotica") || filters.contentRating.includes("pornographic")) && (
-              <p className="text-red-600 text-sm mt-2">
-                Aviso: Conteúdo erótico ou pornográfico pode conter material sensível.
-              </p>
-            )}
           </div>
         </div>
 

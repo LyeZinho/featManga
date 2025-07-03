@@ -5,10 +5,8 @@ import { SearchFilters, type SearchFilters as SearchFiltersType } from "@/compon
 import { MangaCard } from "@/components/manga-card"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Search, Filter, Grid, List, Settings, Shield, ShieldOff } from "lucide-react"
+import { Search, Filter, Grid, List } from "lucide-react"
 import { MangaDxAPI, type Manga } from "@/lib/mangadx-api"
-import { useAdultContent } from "@/lib/adult-content-context"
 
 export default function SearchPage() {
   const [searchResults, setSearchResults] = useState<Manga[]>([])
@@ -19,16 +17,11 @@ export default function SearchPage() {
   const [totalResults, setTotalResults] = useState(0)
   const [hasSearched, setHasSearched] = useState(false)
   const [currentFilters, setCurrentFilters] = useState<SearchFiltersType | null>(null)
-  const { isAdultContentEnabled, enableAdultContent, disableAdultContent } = useAdultContent()
 
   const handleSearch = async (filters: SearchFiltersType, page = 1) => {
     setIsLoading(true)
     setHasSearched(true)
-
-    // Armazenar os filtros atuais
-    if (page === 1) {
-      setCurrentFilters(filters)
-    }
+    setCurrentFilters(filters)
 
     try {
       const searchParams = {
@@ -65,54 +58,36 @@ export default function SearchPage() {
 
   const loadMore = () => {
     if (currentFilters) {
-      const nextPage = currentPage + 1
-      handleSearch(currentFilters, nextPage)
+      handleSearch(currentFilters, currentPage + 1)
     }
   }
 
+  // Check if current search includes sensitive content
+  const hasSensitiveContent = currentFilters?.contentRating.includes("pornographic") || false
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-primary text-primary-foreground py-8">
+      <div className="bg-manga-dark dark:bg-black text-white py-8">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Search className="w-8 h-8 text-accent" />
+              <Search className="w-8 h-8 text-manga-accent" />
               <h1 className="text-3xl font-bold">Busca Avançada</h1>
             </div>
             <div className="flex items-center gap-2">
-                <Button
-                variant={showFilters ? "secondary" : "outline"}
+              <Button
+                variant="outline"
                 size="sm"
                 onClick={() => setShowFilters(!showFilters)}
-                className="text-primary-foreground bg-primary hover:bg-primary/90 border-white"
-                >
+                className="border-white text-white hover:bg-white hover:text-manga-dark"
+              >
                 <Filter className="w-4 h-4 mr-2" />
                 {showFilters ? "Ocultar" : "Mostrar"} Filtros
-                </Button>
-                
+              </Button>
+              <div className="flex border border-white rounded">
                 <Button
-                variant={isAdultContentEnabled ? "destructive" : "secondary"}
-                size="sm"
-                onClick={isAdultContentEnabled ? disableAdultContent : enableAdultContent}
-                className="text-primary-foreground bg-primary hover:bg-primary/90 border-white"
-                >
-                {isAdultContentEnabled ? (
-                  <>
-                  <ShieldOff className="w-4 h-4 mr-2" />
-                  Desativar 18+
-                  </>
-                ) : (
-                  <>
-                  <Shield className="w-4 h-4 mr-2" />
-                  Ativar 18+
-                  </>
-                )}
-                </Button>
-              
-              <div className="flex border border-primary-foreground rounded">
-                <Button
-                  variant={viewMode === "grid" ? "secondary" : "ghost"}
+                  variant={viewMode === "grid" ? "default" : "ghost"}
                   size="sm"
                   onClick={() => setViewMode("grid")}
                   className="rounded-r-none"
@@ -120,7 +95,7 @@ export default function SearchPage() {
                   <Grid className="w-4 h-4" />
                 </Button>
                 <Button
-                  variant={viewMode === "list" ? "secondary" : "ghost"}
+                  variant={viewMode === "list" ? "default" : "ghost"}
                   size="sm"
                   onClick={() => setViewMode("list")}
                   className="rounded-l-none"
@@ -151,15 +126,7 @@ export default function SearchPage() {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h2 className="text-2xl font-bold text-foreground">Resultados da Busca</h2>
-                  <div className="flex items-center gap-2">
-                    <p className="text-muted-foreground">{totalResults} mangás encontrados</p>
-                    {isAdultContentEnabled && (
-                      <Badge variant="secondary" className="text-xs">
-                        <Shield className="w-3 h-3 mr-1" />
-                        Conteúdo 18+ habilitado
-                      </Badge>
-                    )}
-                  </div>
+                  <p className="text-muted-foreground">{totalResults} mangás encontrados</p>
                 </div>
               </div>
             )}
@@ -168,7 +135,7 @@ export default function SearchPage() {
             {isLoading && searchResults.length === 0 && (
               <div className="flex items-center justify-center py-12">
                 <div className="text-center">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-manga-accent mx-auto mb-4"></div>
                   <p className="text-foreground">Buscando mangás...</p>
                 </div>
               </div>
@@ -196,7 +163,7 @@ export default function SearchPage() {
                   }
                 >
                   {searchResults.map((manga) => (
-                    <MangaCard key={manga.id} manga={manga} showStats />
+                    <MangaCard key={manga.id} manga={manga} showStats hasSensitiveContent={hasSensitiveContent} />
                   ))}
                 </div>
 
@@ -206,7 +173,7 @@ export default function SearchPage() {
                     <Button
                       onClick={loadMore}
                       disabled={isLoading}
-                      className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                      className="bg-manga-accent hover:bg-manga-accent/90"
                     >
                       {isLoading ? "Carregando..." : "Carregar Mais"}
                     </Button>
@@ -219,34 +186,34 @@ export default function SearchPage() {
             {!hasSearched && (
               <Card className="text-center py-16">
                 <CardContent>
-                  <Search className="w-20 h-20 text-primary mx-auto mb-6" />
-                  <h3 className="text-2xl font-bold text-primary mb-4">Encontre Seu Mangá Perfeito</h3>
+                  <Search className="w-20 h-20 text-manga-accent mx-auto mb-6" />
+                  <h3 className="text-2xl font-bold text-foreground mb-4">Encontre Seu Mangá Perfeito</h3>
                   <p className="text-muted-foreground max-w-md mx-auto mb-6">
-                  Use os filtros ao lado para descobrir mangás que combinam com seus gostos. Você pode filtrar por
-                  gênero, status, demografia e muito mais!
+                    Use os filtros ao lado para descobrir mangás que combinam com seus gostos. Você pode filtrar por
+                    gênero, status, demografia e muito mais!
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <Filter className="w-6 h-6 text-primary" />
+                    <div className="text-center">
+                      <div className="w-12 h-12 bg-manga-accent/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <Filter className="w-6 h-6 text-manga-accent" />
+                      </div>
+                      <h4 className="font-semibold text-foreground">Filtros Avançados</h4>
+                      <p className="text-sm text-muted-foreground">Combine gêneros e preferências</p>
                     </div>
-                    <h4 className="font-semibold text-foreground">Filtros Avançados</h4>
-                    <p className="text-sm text-muted-foreground">Combine gêneros e preferências</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <Search className="w-6 h-6 text-primary" />
+                    <div className="text-center">
+                      <div className="w-12 h-12 bg-manga-secondary/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <Search className="w-6 h-6 text-manga-secondary" />
+                      </div>
+                      <h4 className="font-semibold text-foreground">Busca Inteligente</h4>
+                      <p className="text-sm text-muted-foreground">Resultados personalizados</p>
                     </div>
-                    <h4 className="font-semibold text-foreground">Busca Inteligente</h4>
-                    <p className="text-sm text-muted-foreground">Resultados personalizados</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <Grid className="w-6 h-6 text-primary" />
+                    <div className="text-center">
+                      <div className="w-12 h-12 bg-manga-accent/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <Grid className="w-6 h-6 text-manga-accent" />
+                      </div>
+                      <h4 className="font-semibold text-foreground">Visualização Flexível</h4>
+                      <p className="text-sm text-muted-foreground">Grade ou lista</p>
                     </div>
-                    <h4 className="font-semibold text-foreground">Visualização Flexível</h4>
-                    <p className="text-sm text-muted-foreground">Grade ou lista</p>
-                  </div>
                   </div>
                 </CardContent>
               </Card>

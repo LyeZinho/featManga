@@ -24,13 +24,6 @@ export default function TrendingPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [selectedPeriod, setSelectedPeriod] = useState<"week" | "month" | "all">("week")
 
-  // Cores de contraste para ambos os temas
-  const sectionColors = [
-    "bg-blue-600 dark:bg-blue-400",    // Populares
-    "bg-amber-600 dark:bg-amber-400",  // Top Rated
-    "bg-emerald-600 dark:bg-emerald-400", // Recentes
-  ]
-
   useEffect(() => {
     const loadTrendingData = async () => {
       try {
@@ -62,7 +55,7 @@ export default function TrendingPage() {
             manga:
               popularResponse.status === "fulfilled" ? popularResponse.value.data : MangaDxAPI.getMockData(12).data,
             badge: "🔥 Hot",
-            color: sectionColors[0],
+            color: "bg-red-500",
           },
           {
             title: "Melhores Avaliados",
@@ -71,7 +64,7 @@ export default function TrendingPage() {
             manga:
               topRatedResponse.status === "fulfilled" ? topRatedResponse.value.data : MangaDxAPI.getMockData(12).data,
             badge: "⭐ Top Rated",
-            color: sectionColors[1],
+            color: "bg-yellow-500",
           },
           {
             title: "Atualizados Recentemente",
@@ -79,7 +72,7 @@ export default function TrendingPage() {
             icon: <Clock className="w-6 h-6" />,
             manga: recentResponse.status === "fulfilled" ? recentResponse.value.data : MangaDxAPI.getMockData(12).data,
             badge: "🆕 Fresh",
-            color: sectionColors[2],
+            color: "bg-green-500",
           },
         ]
 
@@ -96,12 +89,12 @@ export default function TrendingPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-manga-light dark:bg-manga-dark">
+      <div className="min-h-screen bg-manga-light">
         <div className="container mx-auto px-4 py-8">
           <div className="flex items-center justify-center h-64">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-manga-accent mx-auto mb-4"></div>
-              <p className="text-manga-dark dark:text-manga-light">Carregando tendências...</p>
+              <p className="text-manga-dark">Carregando tendências...</p>
             </div>
           </div>
         </div>
@@ -110,7 +103,7 @@ export default function TrendingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-manga-light dark:bg-manga-dark">
+    <div className="min-h-screen bg-manga-light">
       {/* Header */}
       <div className="manga-gradient text-white py-16">
         <div className="container mx-auto px-4">
@@ -122,29 +115,29 @@ export default function TrendingPage() {
             </p>
 
             {/* Period Selector */}
-            <div className="flex justify-center gap-2">
+            {/* <div className="flex justify-center gap-2">
               <Button
                 variant={selectedPeriod === "week" ? "secondary" : "outline"}
                 onClick={() => setSelectedPeriod("week")}
-                className="border-white text-white hover:bg-white hover:text-manga-dark dark:hover:text-manga-dark"
+                className="border-white text-white hover:bg-white hover:text-manga-dark"
               >
                 Esta Semana
               </Button>
               <Button
                 variant={selectedPeriod === "month" ? "secondary" : "outline"}
                 onClick={() => setSelectedPeriod("month")}
-                className="border-white text-white hover:bg-white hover:text-manga-dark dark:hover:text-manga-dark"
+                className="border-white text-white hover:bg-white hover:text-manga-dark"
               >
                 Este Mês
               </Button>
               <Button
                 variant={selectedPeriod === "all" ? "secondary" : "outline"}
                 onClick={() => setSelectedPeriod("all")}
-                className="border-white text-white hover:bg-white hover:text-manga-dark dark:hover:text-manga-dark"
+                className="border-white text-white hover:bg-white hover:text-manga-dark"
               >
                 Todos os Tempos
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -154,23 +147,23 @@ export default function TrendingPage() {
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <Card className="text-center">
             <CardContent className="pt-6">
-              <Fire className="w-12 h-12 text-blue-600 dark:text-blue-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-manga-dark dark:text-manga-light mb-2">1,250</h3>
-              <p className="text-manga-dark/70 dark:text-manga-light/70">Mangás Trending</p>
+              <Fire className="w-12 h-12 text-red-500 mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-manga-dark mb-2">1,250</h3>
+              <p className="text-manga-dark/70">Mangás Trending</p>
             </CardContent>
           </Card>
           <Card className="text-center">
             <CardContent className="pt-6">
-              <Users className="w-12 h-12 text-amber-600 dark:text-amber-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-manga-dark dark:text-manga-light mb-2">45.2K</h3>
-              <p className="text-manga-dark/70 dark:text-manga-light/70">Novos Seguidores</p>
+              <Users className="w-12 h-12 text-manga-secondary mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-manga-dark mb-2">45.2K</h3>
+              <p className="text-manga-dark/70">Novos Seguidores</p>
             </CardContent>
           </Card>
           <Card className="text-center">
             <CardContent className="pt-6">
-              <Calendar className="w-12 h-12 text-emerald-600 dark:text-emerald-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-manga-dark dark:text-manga-light mb-2">328</h3>
-              <p className="text-manga-dark/70 dark:text-manga-light/70">Novos Capítulos</p>
+              <Calendar className="w-12 h-12 text-manga-accent mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-manga-dark mb-2">328</h3>
+              <p className="text-manga-dark/70">Novos Capítulos</p>
             </CardContent>
           </Card>
         </section>
@@ -188,8 +181,8 @@ export default function TrendingPage() {
                       {section.icon}
                     </div>
                     <div>
-                      <CardTitle className="text-manga-dark dark:text-manga-light text-2xl">{section.title}</CardTitle>
-                      <p className="text-manga-dark/70 dark:text-manga-light/70">{section.description}</p>
+                      <CardTitle className="text-manga-dark text-2xl">{section.title}</CardTitle>
+                      <p className="text-manga-dark/70">{section.description}</p>
                     </div>
                   </div>
                   <Badge className={`${section.color} text-white`}>{section.badge}</Badge>
@@ -218,12 +211,12 @@ export default function TrendingPage() {
           <Card className="max-w-2xl mx-auto">
             <CardContent className="pt-8">
               <TrendingUp className="w-16 h-16 text-manga-accent mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-manga-dark dark:text-manga-light mb-4">Quer Descobrir Mais?</h3>
-              <p className="text-manga-dark/70 dark:text-manga-light/70 mb-6">
+              <h3 className="text-2xl font-bold text-manga-dark mb-4">Quer Descobrir Mais?</h3>
+              <p className="text-manga-dark/70 mb-6">
                 Use nossa busca avançada para encontrar mangás específicos ou explore por categorias
               </p>
               <div className="flex gap-4 justify-center">
-                <Button className="bg-manga-accent hover:bg-manga-accent/90 text-white">Busca Avançada</Button>
+                <Button className="bg-manga-accent hover:bg-manga-accent/90">Busca Avançada</Button>
                 <Button
                   variant="outline"
                   className="border-manga-secondary text-manga-secondary hover:bg-manga-secondary hover:text-white bg-transparent"

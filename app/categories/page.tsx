@@ -159,14 +159,14 @@ export default function CategoriesPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-manga-light dark:bg-manga-dark">
+    <div className="min-h-screen bg-manga-light">
       {/* Header */}
-      <div className="manga-gradient dark:text-white text-manga-dark py-12">
+      <div className="bg-manga-dark text-white py-12">
         <div className="container mx-auto px-4">
           <div className="text-center">
-            <Grid className="w-16 h-16 text-manga-accent dark:text-manga-accent-light mx-auto mb-4" />
+            <Grid className="w-16 h-16 text-manga-accent mx-auto mb-4" />
             <h1 className="text-4xl font-bold mb-4">Explorar por Categorias</h1>
-            <p className="text-xl dark:text-gray-300 text-gray-700 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               Descubra mangás organizados por demografia e gênero. Encontre exatamente o tipo de história que você
               procura.
             </p>
@@ -178,8 +178,8 @@ export default function CategoriesPage() {
         {/* Demographics Section */}
         <section className="mb-16">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-manga-dark dark:text-manga-light mb-4">Por Demografia</h2>
-            <p className="text-manga-dark/70 dark:text-manga-light/70 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold text-manga-dark mb-4">Por Demografia</h2>
+            <p className="text-manga-dark/70 max-w-2xl mx-auto">
               Mangás organizados pelo público-alvo principal, cada um com suas características únicas
             </p>
           </div>
@@ -190,34 +190,32 @@ export default function CategoriesPage() {
                 <Card className="manga-card-hover cursor-pointer h-full">
                   <CardHeader className="text-center">
                     <div
-                      className={`
-                        ${category.color}
-                        text-white
-                        dark:text-manga-dark
-                        w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4
-                        border-4 border-white dark:border-manga-light
-                      `}
-                      style={{
-                        backgroundColor:
-                          category.id === "shounen"
-                            ? "#f59e42"
-                            : category.id === "seinen"
-                            ? "#a78bfa"
-                            : category.id === "shoujo"
-                            ? "#f472b6"
-                            : "#6366f1",
-                      }}
+                      className={`${category.color} text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4`}
                     >
                       {category.icon}
                     </div>
-                    <CardTitle className="text-manga-dark dark:text-manga-light">{category.name}</CardTitle>
-                    <Badge variant="outline" className="mx-auto border-manga-accent dark:border-manga-accent-light text-manga-accent dark:text-manga-accent-light">
+                    <CardTitle className="text-manga-dark">{category.name}</CardTitle>
+                    <Badge variant="outline" className="mx-auto">
                       {category.count} mangás
                     </Badge>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-manga-dark/70 dark:text-manga-light/70 text-center mb-4">{category.description}</p>
+                    <p className="text-sm text-manga-dark/70 text-center mb-4">{category.description}</p>
+
                     {/* Featured manga preview */}
+                    {/* {!isLoading && featuredManga[category.id] && (
+                      <div className="grid grid-cols-2 gap-2">
+                        {featuredManga[category.id].slice(0, 4).map((manga) => (
+                          <div key={manga.id} className="aspect-[3/4] rounded overflow-hidden">
+                            <img
+                              src={`/placeholder.svg?height=120&width=90&text=${encodeURIComponent(MangaDxAPI.getTitle(manga).slice(0, 10))}`}
+                              alt={MangaDxAPI.getTitle(manga)}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )} */}
                   </CardContent>
                 </Card>
               </Link>
@@ -228,8 +226,8 @@ export default function CategoriesPage() {
         {/* Genres Section */}
         <section>
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-manga-dark dark:text-manga-light mb-4">Por Gênero</h2>
-            <p className="text-manga-dark/70 dark:text-manga-light/70 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold text-manga-dark mb-4">Por Gênero</h2>
+            <p className="text-manga-dark/70 max-w-2xl mx-auto">
               Explore mangás pelos gêneros mais populares e encontre suas histórias favoritas
             </p>
           </div>
@@ -241,38 +239,18 @@ export default function CategoriesPage() {
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       <div
-                        className={`
-                          ${genre.color}
-                          text-white
-                          dark:text-manga-dark
-                          w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0
-                          border-4 border-white dark:border-manga-light
-                        `}
-                        style={{
-                          backgroundColor:
-                            genre.id === "action"
-                              ? "#ef4444"
-                              : genre.id === "romance"
-                              ? "#f472b6"
-                              : genre.id === "comedy"
-                              ? "#facc15"
-                              : genre.id === "fantasy"
-                              ? "#a78bfa"
-                              : genre.id === "slice-of-life"
-                              ? "#22c55e"
-                              : "#818cf8",
-                        }}
+                        className={`${genre.color} text-white w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0`}
                       >
                         {genre.icon}
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-2">
-                          <h3 className="text-lg font-bold text-manga-dark dark:text-manga-light">{genre.name}</h3>
-                          <Badge variant="outline" className="text-xs border-manga-accent dark:border-manga-accent-light text-manga-accent dark:text-manga-accent-light">
+                          <h3 className="text-lg font-bold text-manga-dark">{genre.name}</h3>
+                          <Badge variant="outline" className="text-xs">
                             {genre.count}
                           </Badge>
                         </div>
-                        <p className="text-sm text-manga-dark/70 dark:text-manga-light/70">{genre.description}</p>
+                        <p className="text-sm text-manga-dark/70">{genre.description}</p>
                       </div>
                     </div>
                   </CardContent>
@@ -286,13 +264,13 @@ export default function CategoriesPage() {
         <section className="text-center py-16">
           <Card className="max-w-2xl mx-auto">
             <CardContent className="pt-8">
-              <Users className="w-16 h-16 text-manga-accent dark:text-manga-accent-light mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-manga-dark dark:text-manga-light mb-4">Não Encontrou o Que Procura?</h3>
-              <p className="text-manga-dark/70 dark:text-manga-light/70 mb-6">
+              <Users className="w-16 h-16 text-manga-accent mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-manga-dark mb-4">Não Encontrou o Que Procura?</h3>
+              <p className="text-manga-dark/70 mb-6">
                 Use nossa busca avançada para combinar múltiplos gêneros e encontrar exatamente o que você quer ler
               </p>
               <Link href="/search">
-                <Button size="lg" className="bg-manga-accent dark:bg-manga-accent-light hover:bg-manga-accent/90 dark:hover:bg-manga-accent-light/90 text-white dark:text-manga-dark">
+                <Button size="lg" className="bg-manga-accent hover:bg-manga-accent/90">
                   <Grid className="w-5 h-5 mr-2" />
                   Busca Avançada
                 </Button>
