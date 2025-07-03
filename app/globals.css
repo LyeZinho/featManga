@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 12%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 12%;
+    --primary: 354 70% 54%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 199 55% 44%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 12%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 354 70% 54%;
+    --radius: 0.5rem;
+    /* Custom manga theme variables */
+    --manga-header-bg: 0 0% 12%;
+    --manga-header-text: 0 0% 100%;
+    --manga-text-primary: 0 0% 12%;
+    --manga-text-secondary: 0 0% 45%;
+    --manga-text-muted: 0 0% 60%;
+  }
+
+  .dark {
+    --background: 0 0% 8%;
+    --foreground: 0 0% 95%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 354 70% 54%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 199 55% 44%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 95%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 354 70% 54%;
+    /* Custom manga theme variables for dark mode */
+    --manga-header-bg: 0 0% 4%;
+    --manga-header-text: 0 0% 100%;
+    --manga-text-primary: 0 0% 95%;
+    --manga-text-secondary: 0 0% 70%;
+    --manga-text-muted: 0 0% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.manga-gradient {
+  background: linear-gradient(135deg, hsl(var(--background)) 0%, #e63946 100%);
+}
+
+.manga-card-hover {
+  transition: all 0.3s ease;
+}
+
+.manga-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(230, 57, 70, 0.15);
+}
+
+.dark .manga-card-hover:hover {
+  box-shadow: 0 10px 25px rgba(230, 57, 70, 0.25);
+}
+
+/* Better dark theme adjustments */
+.dark .manga-gradient {
+  background: linear-gradient(135deg, hsl(var(--background)) 0%, #e63946 100%);
+}
+
+/* Ensure proper text contrast */
+.text-manga-text-primary {
+  color: hsl(var(--manga-text-primary));
+}
+
+.text-manga-text-secondary {
+  color: hsl(var(--manga-text-secondary));
+}
+
+.text-manga-text-muted {
+  color: hsl(var(--manga-text-muted));
+}
+
+.bg-manga-header-bg {
+  background-color: hsl(var(--manga-header-bg));
+}
+
+.text-manga-header-text {
+  color: hsl(var(--manga-header-text));
+}
